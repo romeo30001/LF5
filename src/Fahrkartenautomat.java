@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 class Fahrkartenautomat {
@@ -10,7 +11,7 @@ class Fahrkartenautomat {
         double eingeworfeneMuenze;
         double rueckgabebetrag;
         double nochZuZahlen;
-        int fahrkartenAnzahl;
+        int fahrkartenAnzahl = 1;
 
         // Geldbetrag eingeben
         System.out.print("Zu zahlender Betrag (Euro): ");
@@ -36,7 +37,7 @@ class Fahrkartenautomat {
         for (int i = 0; i < 8; i++) {
             System.out.print("=");
             try {
-                Thread.sleep(200);
+                Thread.sleep(0);
             }
             catch (InterruptedException e) {
                 e.printStackTrace();
@@ -70,7 +71,7 @@ class Fahrkartenautomat {
                 System.out.println("10 Cent");
                 rueckgabebetrag = rueckgabebetrag - 0.1;
             }
-            while (rueckgabebetrag >= 0.05) { // 5-Cent-Münzen
+            while (rueckgabebetrag > 0.049) { // 5-Cent-Münzen
                 System.out.println("5 Cent");
                 rueckgabebetrag = rueckgabebetrag - 0.05;
             }
