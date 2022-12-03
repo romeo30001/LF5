@@ -34,9 +34,14 @@ class Fahrkartenautomat {
         while (eingezahlterGesamtbetrag < zuZahlenderBetrag) {
             nochZuZahlen = zuZahlenderBetrag * fahrkartenAnzahl - eingezahlterGesamtbetrag;
             System.out.println("Noch zu zahlen: " + nochZuZahlen + " Euro");
-            System.out.print("Eingabe (mind. 5 Cent, höchstens 2 Euro): ");
+            System.out.print("Eingabe (mind. 5 Cent, höchstens 20 Euro): ");
             eingeworfeneMuenze = tastatur.nextDouble();
-            eingezahlterGesamtbetrag = eingezahlterGesamtbetrag + eingeworfeneMuenze;
+            if (eingeworfeneMuenze == 0.05 || eingeworfeneMuenze == 0.1 || eingeworfeneMuenze == 0.2 || eingeworfeneMuenze == 0.5 || eingeworfeneMuenze == 1 || eingeworfeneMuenze == 2 || eingeworfeneMuenze == 5 || eingeworfeneMuenze == 10 || eingeworfeneMuenze == 20) {
+                eingezahlterGesamtbetrag = eingezahlterGesamtbetrag + eingeworfeneMuenze;
+            }
+            else {
+                System.out.println(">> Kein gültiges Zahlungsmittel");
+            }
         }
 
         // Fahrscheinausgabe
@@ -54,10 +59,22 @@ class Fahrkartenautomat {
 
         // Rückgeldberechnung und -ausgabe
         rueckgabebetrag = eingezahlterGesamtbetrag - zuZahlenderBetrag;
-        if (rueckgabebetrag > 0.0) {
+        if (rueckgabebetrag > 0.0 ) {
             System.out.println("Der Rückgabebetrag in Höhe von " + rueckgabebetrag + " Euro");
             System.out.println("wird in folgenden Münzen ausgezahlt:");
 
+            while (rueckgabebetrag >= 20.0) { // 20-Euro-Münzen
+                System.out.println("20 Euro");
+                rueckgabebetrag = rueckgabebetrag - 20.0;
+            }
+            while (rueckgabebetrag >= 10.0) { // 10-Euro-Münzen
+                System.out.println("10 Euro");
+                rueckgabebetrag = rueckgabebetrag - 10.0;
+            }
+            while (rueckgabebetrag >= 5.0) { // 5-Euro-Münzen
+                System.out.println("5 Euro");
+                rueckgabebetrag = rueckgabebetrag - 5.0;
+            }
             while (rueckgabebetrag >= 2.0) { // 2-Euro-Münzen
                 System.out.println("2 Euro");
                 rueckgabebetrag = rueckgabebetrag - 2.0;
