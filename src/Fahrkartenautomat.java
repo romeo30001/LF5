@@ -15,10 +15,18 @@ class Fahrkartenautomat {
         // Geldbetrag eingeben
         System.out.print("Zu zahlender Betrag (Euro): ");
         zuZahlenderBetrag = tastatur.nextDouble();
+        if (zuZahlenderBetrag < 1) {
+            zuZahlenderBetrag = 1;
+            System.out.println("Fehlerhafte Eingabe - Ticketpreis wird auf " + zuZahlenderBetrag + " gesetzt");
+        }
 
         //Anzahl der Fahrkarten eingeben
         System.out.print("Anzahl der Tickets: ");
         fahrkartenAnzahl = tastatur.nextInt();
+        if (fahrkartenAnzahl < 1 || fahrkartenAnzahl > 10) {
+            fahrkartenAnzahl = 1;
+            System.out.println("Fehlerhafte Eingabe - Ticketpreis wird auf " + fahrkartenAnzahl + " gesetzt");
+        }
 
         // Geldeinwurf
         eingezahlterGesamtbetrag = 0.0;
