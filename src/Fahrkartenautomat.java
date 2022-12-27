@@ -1,19 +1,115 @@
 import java.util.Scanner;
 
 class Fahrkartenautomat {
-    public static void main(String[] args) {
 
-        Scanner tastatur = new Scanner(System.in);
+    // Rückgeldberechnung und -ausgabe
+    public static void rueckgeldAusgeben(double eingezahlterGesamtbetrag, double zuZahlenderBetrag) {
+        double rueckgabebetrag;
+        rueckgabebetrag = eingezahlterGesamtbetrag - zuZahlenderBetrag;
+        if (rueckgabebetrag > 0.0) {
+            System.out.print("Der Rückgabebetrag in Höhe von ");
+            System.out.printf("%.2f", rueckgabebetrag);
+            System.out.print(" Euro");
+            System.out.println(" wird in folgenden Münzen ausgezahlt:");
+            System.out.println();
 
-        double zuZahlenderBetrag = 0;
-        double zwischensumme = 0;
+            while (rueckgabebetrag >= 20.0) { // 20-Euro-Münzen
+                System.out.println("20 Euro");
+                rueckgabebetrag = rueckgabebetrag - 20.0;
+            }
+            while (rueckgabebetrag >= 10.0) { // 10-Euro-Münzen
+                System.out.println("10 Euro");
+                rueckgabebetrag = rueckgabebetrag - 10.0;
+            }
+            while (rueckgabebetrag >= 5.0) { // 5-Euro-Münzen
+                System.out.println("5 Euro");
+                rueckgabebetrag = rueckgabebetrag - 5.0;
+            }
+            while (rueckgabebetrag >= 2.0) { // 2-Euro-Münzen
+                System.out.println("2 Euro");
+                rueckgabebetrag = rueckgabebetrag - 2.0;
+            }
+            while (rueckgabebetrag >= 1.0) { // 1-Euro-Münzen
+                System.out.println("1 Euro");
+                rueckgabebetrag = rueckgabebetrag - 1.0;
+            }
+            while (rueckgabebetrag >= 0.5) { // 50-Cent-Münzen
+                System.out.println("50 Cent");
+                rueckgabebetrag = rueckgabebetrag - 0.5;
+            }
+            while (rueckgabebetrag >= 0.2) { // 20-Cent-Münzen
+                System.out.println("20 Cent");
+                rueckgabebetrag = rueckgabebetrag - 0.2;
+            }
+            while (rueckgabebetrag >= 0.1) { // 10-Cent-Münzen
+                System.out.println("10 Cent");
+                rueckgabebetrag = rueckgabebetrag - 0.1;
+            }
+            while (rueckgabebetrag > 0.049) { // 5-Cent-Münzen
+                System.out.println("5 Cent");
+                rueckgabebetrag = rueckgabebetrag - 0.05;
+            }
+        }
+
+        System.out.println("\nVergessen Sie nicht, den Fahrschein\n" + "vor Fahrtantritt entwerten zu lassen!\n"
+                + "Wir wünschen Ihnen eine gute Fahrt.");
+    }
+
+    // Fahrscheinausgabe
+    public static void fahrKartenAusgeben(double zuZahlenderBetrag) {
+        if (zuZahlenderBetrag > 0) {
+            System.out.println("\nFahrschein wird ausgegeben");
+            for (int i = 0; i < 8; i++) {
+                System.out.print("=");
+                try {
+                    Thread.sleep(0);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println("\n\n");
+        } else {
+            System.out.println("\nFahrschein wird nicht ausgegeben, weil Sie kein Geld bezahlt haben");
+            for (int i = 0; i < 8; i++) {
+                System.out.print("=");
+                try {
+                    Thread.sleep(0);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println("\n\n");
+        }
+    }
+
+    //Geldeinwurf
+    public static double fahrkartenBezahlen(Scanner tastatur, double zuZahlenderBetrag) {
+        double nochZuZahlen;
         double eingezahlterGesamtbetrag;
         double eingeworfeneMuenze;
-        double rueckgabebetrag;
-        double nochZuZahlen;
+        eingezahlterGesamtbetrag = 0.0;
+        while (eingezahlterGesamtbetrag < zuZahlenderBetrag) {
+            nochZuZahlen = zuZahlenderBetrag - eingezahlterGesamtbetrag;
+            System.out.print("Noch zu zahlen: ");
+            System.out.printf("%.2f", nochZuZahlen);
+            System.out.println(" Euro");
+            System.out.print("Eingabe (mind. 5 Cent, höchstens 20 Euro): ");
+            eingeworfeneMuenze = tastatur.nextDouble();
+            if (eingeworfeneMuenze == 0.05 || eingeworfeneMuenze == 0.1 || eingeworfeneMuenze == 0.2 || eingeworfeneMuenze == 0.5 || eingeworfeneMuenze == 1 || eingeworfeneMuenze == 2 || eingeworfeneMuenze == 5 || eingeworfeneMuenze == 10 || eingeworfeneMuenze == 20) {
+                eingezahlterGesamtbetrag = eingezahlterGesamtbetrag + eingeworfeneMuenze;
+            } else {
+                System.out.println(">> Kein gültiges Zahlungsmittel");
+            }
+        }
+        return eingezahlterGesamtbetrag;
+    }
+
+    //Kartenauswahl und Ticketanzahl
+    public static double fahrkartenbestellungErfassen(Scanner tastatur) {
+        double zuZahlenderBetrag = 0;
+        double zwischensumme = 0;
         int fahrkartenAnzahl;
         int fahrkartenTyp;
-
         System.out.println("Fahrkartenbestellvorgang: ");
         System.out.println("=========================");
         System.out.println();
@@ -62,9 +158,12 @@ class Fahrkartenautomat {
             } else if (fahrkartenTyp == 3) {
                 zuZahlenderBetrag = 0;
                 zuZahlenderBetrag = zuZahlenderBetrag + 8.80;
-            } else {
+            } else if (fahrkartenTyp == 4) {
                 zuZahlenderBetrag = 0;
                 zuZahlenderBetrag = zuZahlenderBetrag + 9.40;
+            } else {
+                zuZahlenderBetrag = 0;
+                zuZahlenderBetrag = zuZahlenderBetrag + 0;
             }
 
             //Anzahl der Fahrkarten eingeben
@@ -90,80 +189,26 @@ class Fahrkartenautomat {
             System.out.print("Ihre Wahl: ");
             fahrkartenTyp = tastatur.nextInt();
         }
+        return zuZahlenderBetrag;
+    }
 
+    public static void begruessung() {
+        System.out.println("Herzlich Willkommen!");
+        System.out.println();
+    }
 
-        // Geldeinwurf
-        eingezahlterGesamtbetrag = 0.0;
-        while (eingezahlterGesamtbetrag < zuZahlenderBetrag) {
-            nochZuZahlen = zwischensumme - eingezahlterGesamtbetrag;
-            System.out.println("Noch zu zahlen: " + nochZuZahlen + " Euro");
-            System.out.print("Eingabe (mind. 5 Cent, höchstens 20 Euro): ");
-            eingeworfeneMuenze = tastatur.nextDouble();
-            if (eingeworfeneMuenze == 0.05 || eingeworfeneMuenze == 0.1 || eingeworfeneMuenze == 0.2 || eingeworfeneMuenze == 0.5 || eingeworfeneMuenze == 1 || eingeworfeneMuenze == 2 || eingeworfeneMuenze == 5 || eingeworfeneMuenze == 10 || eingeworfeneMuenze == 20) {
-                eingezahlterGesamtbetrag = eingezahlterGesamtbetrag + eingeworfeneMuenze;
-            } else {
-                System.out.println(">> Kein gültiges Zahlungsmittel");
-            }
-        }
+    public static void main(String[] args) {
 
-        // Fahrscheinausgabe
-        System.out.println("\nFahrschein wird ausgegeben");
-        for (int i = 0; i < 8; i++) {
-            System.out.print("=");
-            try {
-                Thread.sleep(0);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println("\n\n");
+        Scanner tastatur = new Scanner(System.in);
 
-        // Rückgeldberechnung und -ausgabe
-        rueckgabebetrag = eingezahlterGesamtbetrag - zuZahlenderBetrag;
-        if (rueckgabebetrag > 0.0) {
-            System.out.println("Der Rückgabebetrag in Höhe von " + rueckgabebetrag + " Euro");
-            System.out.println("wird in folgenden Münzen ausgezahlt:");
+        double zuZahlenderBetrag;
+        double eingezahlterGesamtbetrag;
 
-            while (rueckgabebetrag >= 20.0) { // 20-Euro-Münzen
-                System.out.println("20 Euro");
-                rueckgabebetrag = rueckgabebetrag - 20.0;
-            }
-            while (rueckgabebetrag >= 10.0) { // 10-Euro-Münzen
-                System.out.println("10 Euro");
-                rueckgabebetrag = rueckgabebetrag - 10.0;
-            }
-            while (rueckgabebetrag >= 5.0) { // 5-Euro-Münzen
-                System.out.println("5 Euro");
-                rueckgabebetrag = rueckgabebetrag - 5.0;
-            }
-            while (rueckgabebetrag >= 2.0) { // 2-Euro-Münzen
-                System.out.println("2 Euro");
-                rueckgabebetrag = rueckgabebetrag - 2.0;
-            }
-            while (rueckgabebetrag >= 1.0) { // 1-Euro-Münzen
-                System.out.println("1 Euro");
-                rueckgabebetrag = rueckgabebetrag - 1.0;
-            }
-            while (rueckgabebetrag >= 0.5) { // 50-Cent-Münzen
-                System.out.println("50 Cent");
-                rueckgabebetrag = rueckgabebetrag - 0.5;
-            }
-            while (rueckgabebetrag >= 0.2) { // 20-Cent-Münzen
-                System.out.println("20 Cent");
-                rueckgabebetrag = rueckgabebetrag - 0.2;
-            }
-            while (rueckgabebetrag >= 0.1) { // 10-Cent-Münzen
-                System.out.println("10 Cent");
-                rueckgabebetrag = rueckgabebetrag - 0.1;
-            }
-            while (rueckgabebetrag > 0.049) { // 5-Cent-Münzen
-                System.out.println("5 Cent");
-                rueckgabebetrag = rueckgabebetrag - 0.05;
-            }
-        }
-
-        System.out.println("\nVergessen Sie nicht, den Fahrschein\n" + "vor Fahrtantritt entwerten zu lassen!\n"
-                + "Wir wünschen Ihnen eine gute Fahrt.");
+        begruessung();
+        zuZahlenderBetrag = fahrkartenbestellungErfassen(tastatur);
+        eingezahlterGesamtbetrag = fahrkartenBezahlen(tastatur, zuZahlenderBetrag);
+        fahrKartenAusgeben(zuZahlenderBetrag);
+        rueckgeldAusgeben(eingezahlterGesamtbetrag, zuZahlenderBetrag);
 
         tastatur.close();
     }
