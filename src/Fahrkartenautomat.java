@@ -1,8 +1,9 @@
 import java.util.Scanner;
 
 class Fahrkartenautomat {
+
     //Münzrückgabe
-    public static void muenzRueckgabe(double rueckgabebetrag){
+    public static void muenzRueckgabe(double rueckgabebetrag) {
 
         while (rueckgabebetrag >= 20.0) { // 20-Euro-Münzen
             System.out.println("20 Euro");
@@ -115,60 +116,55 @@ class Fahrkartenautomat {
         double zwischensumme = 0;
         int fahrkartenAnzahl;
         int fahrkartenTyp;
+        int bezahlen = 1;
+        String[] fahrkartenTypen = {"Einzelfahrschein AB", "Einzelfahrschein BC", "Einzelfahrschein ABC", "Kurzstrecke AB", "Tageskarte AB", "Tageskarte BC", "Tageskarte ABC", "4-Fahrten-Karte AB", "4-Fahrten-Karte BC", "4-Fahrten-Karte ABC", "Kleingruppen-Tageskarte AB", "Kleingruppen-Tageskarte BC", "Kleingruppen-Tageskarte ABC"};
+        double[] fahrkartenPreise = {3.00, 3.50, 3.80, 2.00, 8.60, 9.20, 10.00, 9.40, 12.60, 13.80, 25.50, 26.00, 26.50};
         System.out.println("Fahrkartenbestellvorgang: ");
         System.out.println("=========================");
         System.out.println();
 
         // Auswahl der Fahrkarten
         System.out.println("Wählen Sie ihre Wunschfahrkarte für Berlin AB aus: ");
-        System.out.println("Kurzstrecke AB [2,00 EUR] (1)");
-        System.out.println("Einzelfahrschein AB [3,00 EUR] (2)");
-        System.out.println("Tageskarte AB [8,80 EUR] (3)");
-        System.out.println("4-Fahrten-Karte AB [9,40 EUR] (4)");
-        System.out.println("Bezahlen (9)");
+        for (int i = 0; i < fahrkartenTypen.length; i++) {
+            System.out.println(fahrkartenTypen[i] + " [" + fahrkartenPreise[i] + " EUR]" + " (" + (i + 1) + ")");
+            bezahlen++;
+        }
+        System.out.println("Bezahlen (" + bezahlen + ")");
         System.out.println();
         System.out.print("Ihre Wahl: ");
         fahrkartenTyp = tastatur.nextInt();
 
-        while (fahrkartenTyp == 9) {
+        while (fahrkartenTyp == bezahlen) {
             System.out.println();
             System.out.println("Fahrkartenbestellvorgang: ");
             System.out.println("=========================");
             System.out.println();
             System.out.println("Wählen Sie ihre Wunschfahrkarte für Berlin AB aus: ");
-            System.out.println("Kurzstrecke AB [2,00 EUR] (1)");
-            System.out.println("Einzelfahrschein AB [3,00 EUR] (2)");
-            System.out.println("Tageskarte AB [8,80 EUR] (3)");
-            System.out.println("4-Fahrten-Karte AB [9,40 EUR] (4)");
-            System.out.println("Bezahlen (9)");
+            for (int i = 0; i < fahrkartenTypen.length; i++) {
+                System.out.println(fahrkartenTypen[i] + " [" + fahrkartenPreise[i] + " EUR]" + " (" + (i + 1) + ")");
+            }
+            System.out.println("Bezahlen (" + bezahlen + ")");
             System.out.println();
             System.out.print("Ihre Wahl: ");
             fahrkartenTyp = tastatur.nextInt();
-
         }
 
-        while (fahrkartenTyp != 9) {
-            while (fahrkartenTyp < 1 || fahrkartenTyp > 9 || fahrkartenTyp == 8 || fahrkartenTyp == 7 || fahrkartenTyp == 6 || fahrkartenTyp == 5) {
+        while (fahrkartenTyp != bezahlen) {
+            while (fahrkartenTyp < 1 || fahrkartenTyp >= bezahlen) {
                 System.out.println(">>falsche Eingabe<<");
                 System.out.print("Ihre Wahl: ");
                 fahrkartenTyp = tastatur.nextInt();
             }
+
             // Berechnung des Geldbetrags
-            if (fahrkartenTyp == 1) {
-                zuZahlenderBetrag = 0;
-                zuZahlenderBetrag = zuZahlenderBetrag + 2;
-            } else if (fahrkartenTyp == 2) {
-                zuZahlenderBetrag = 0;
-                zuZahlenderBetrag = zuZahlenderBetrag + 3;
-            } else if (fahrkartenTyp == 3) {
-                zuZahlenderBetrag = 0;
-                zuZahlenderBetrag = zuZahlenderBetrag + 8.80;
-            } else if (fahrkartenTyp == 4) {
-                zuZahlenderBetrag = 0;
-                zuZahlenderBetrag = zuZahlenderBetrag + 9.40;
-            } else {
-                zuZahlenderBetrag = 0;
-                zuZahlenderBetrag = zuZahlenderBetrag + 0;
+            for (int i = 0; i < fahrkartenTypen.length; i++) {
+                if (fahrkartenTyp == i + 1) {
+                    zuZahlenderBetrag = 0;
+                    zuZahlenderBetrag = zuZahlenderBetrag + fahrkartenPreise[i];
+                    break;
+                } else {
+                    zuZahlenderBetrag = 0;
+                }
             }
 
             //Anzahl der Fahrkarten eingeben
@@ -185,11 +181,10 @@ class Fahrkartenautomat {
             System.out.println("Zwischensumme: " + zwischensumme + " €");
             System.out.println();
             System.out.println("Wählen Sie ihre Wunschfahrkarte für Berlin AB aus: ");
-            System.out.println("Kurzstrecke AB [2,00 EUR] (1)");
-            System.out.println("Einzelfahrschein AB [3,00 EUR] (2)");
-            System.out.println("Tageskarte AB [8,80 EUR] (3)");
-            System.out.println("4-Fahrten-Karte AB [9,40 EUR] (4)");
-            System.out.println("Bezahlen (9)");
+            for (int i = 0; i < fahrkartenTypen.length; i++) {
+                System.out.println(fahrkartenTypen[i] + " [" + fahrkartenPreise[i] + " EUR]" + " (" + (i + 1) + ")");
+            }
+            System.out.println("Bezahlen (" + bezahlen + ")");
             System.out.println();
             System.out.print("Ihre Wahl: ");
             fahrkartenTyp = tastatur.nextInt();
