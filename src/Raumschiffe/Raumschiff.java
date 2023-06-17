@@ -198,15 +198,15 @@ public class Raumschiff extends Ladung{
     }
 
     public void ladungsverzeichnisAufraeumen (){
-        for (Ladung ladung : ladungsverzeichnis) {
-           if (ladung.getMenge() <= 0){
-               ladungsverzeichnis.remove(ladung);
+        for (int i = 0; i < ladungsverzeichnis.size(); i++) {
+           if (ladungsverzeichnis.get(i).getMenge() <= 0){
+               ladungsverzeichnis.remove(ladungsverzeichnis.get(i));
            }
         }
     }
 
     public void broadcastLogAusgeben (){
-        for (int i = 0; i < this.broadcastKommunikator.size(); i++) {
+        for (int i = 0; i < broadcastKommunikator.size(); i++) {
             System.out.println(broadcastKommunikator.get(i));
         }
     }
